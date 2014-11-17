@@ -14,7 +14,7 @@ static NSString * BackendBaseURL =
 static NSString * OAuth2Path =
         @"apps/authorize";
 static NSString * ClientId =
-        @"client_id=72wl92s14rzx1xgpwoyl3wgl77cx1xr";
+        @"client_id=SECRET_CLIENT_ID_CHANGE_IT";
 static NSString * RedirectURI =
         @"redirect_uri=iterco://beeminder-callback";
 static NSString * ResponseType =
@@ -36,6 +36,11 @@ static NSString * ResponseType =
     return self;
 }
 
+/**
+ *  Beeminder Helper Singleton
+ *
+ *  @return Pointer to a singleton class instance.
+ */
 + (instancetype)sharedBeeMinder {
     static NFBeeminderHelper *_sharedBeeMinder = nil;
     static dispatch_once_t onceToken;
@@ -55,11 +60,19 @@ static NSString * ResponseType =
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"beeminder_slugname"];
 }
 
+/**
+ *  Get Beeminder secret auth token
+ *
+ *  @return the value of the auth token as a NSString
+ */
 - (NSString *) getToken
 {
     return [[NSUserDefaults standardUserDefaults] stringForKey:@"beeminder_token"];
 }
 
+/**
+ *  Start the OAuth2 process
+ */
 - (void) beginOAuth
 {
     if ([[NSUserDefaults standardUserDefaults]
@@ -77,6 +90,9 @@ static NSString * ResponseType =
     }
 }
 
+/**
+ *  Remove Authentication Token to force a re-Auth
+ */
 - (void) removeAuth
 {
     [[NSUserDefaults standardUserDefaults]
@@ -85,6 +101,11 @@ static NSString * ResponseType =
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+/**
+ *  Load Beeminder Goals from JSON response and fill a NSArray
+ *
+ *  @param completion callback that return if the operation was successful and the HTTP response code.
+ */
 - (void) refreshGoalsWithCompletion:
     (void (^)(BOOL, NSInteger))completion
 {
@@ -114,7 +135,11 @@ static NSString * ResponseType =
 
 }
 
-
+/**
+ *  Add One Unit to a Goal of Beeminder
+ *
+ *  @param completion callback that return if the operation was successful and the HTTP response code.
+ */
 - (void) addOneUnitToGoal:(void (^)(BOOL, NSInteger))completion
 {
     id success = ^(AFHTTPRequestOperation * operation, id JSON) {
