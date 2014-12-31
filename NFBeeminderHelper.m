@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 NetFilter. All rights reserved.
 //
 
+// It uses AFNetworking 1.x series
+
 #import "NFBeeminderHelper.h"
 #import "AFNetworking.h"
 
