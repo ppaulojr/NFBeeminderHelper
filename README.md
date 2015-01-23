@@ -22,3 +22,6 @@ You can install it manually but we recommend you use [Pod]:
 
 
 [Check Post](http://blog.beeminder.com/rosary "Post about integration")
+
+## Dependencies
+- AFNetworking
